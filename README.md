@@ -1,2 +1,2 @@
-# CS310
-Course Repository for CS 310
+# CS300
+Course Repository for CS 300
