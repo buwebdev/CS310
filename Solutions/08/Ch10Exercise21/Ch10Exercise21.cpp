@@ -17,19 +17,87 @@ const int ARRAY_SIZE = 10;
 
 // Variables
 bankAccount accounts[ARRAY_SIZE];
+int choice; 
 
 // Function prototypes 
 void configureAccounts(bankAccount accounts[]);
-void menuOptions(bankAccount accounts[]);
+void menuOptions();
+void displayAccounts(bankAccount accounts[]);
 bankAccount findAccount(bankAccount accounts[], int acctNum);
+
 
 int main()
 {
+    // variables 
+    int accountNum; 
+    double depositAmt;
+    double withdrawAmt;
+    bankAccount selectedAccount;
+
     configureAccounts(accounts); // call the configure accounts function 
 
     cout << "\n\n  Bank One of Omaha" << endl;
 
-    menuOptions(accounts);
+    displayAccounts(accounts); // call the display accounts function 
+
+    // prompt the user to enter an account number 
+    cout << "\n\n  Enter an account number: "; 
+    cin  >> accountNum; 
+    cout << endl;
+
+    selectedAccount = findAccount(accounts, accountNum); // call the findAccount function to return the account number
+
+    // if the interest rate is 0.0; it means the findAccount returned an empty class object (a.k.a., invalid account number)
+    if (selectedAccount.getInterestRate() == 0.0)
+    {
+        cout << "  ERROR: Invalid account number.  Program exiting." << endl;
+
+        cout << "\n\n  Press any key to continue ..."; 
+
+        _getch(); // halt processing 
+
+        return 0; // system exit code 
+    }
+
+    menuOptions(); // call the menuOptions function 
+
+    // While the choice does not equal -1, process the users request 
+    while (choice != -1)
+    {
+        switch (choice)
+        {
+        case 1:
+            cout << "  Account Holder Name: " << selectedAccount.getAccountHolderName();
+            break;
+        case 2:
+            cout << "  Account Balance: " << selectedAccount.getBalance();
+            break;
+        case 3:
+            cout << "  Enter deposit amount: ";
+            cin >> depositAmt;
+            cout << "  Old Account Balance: " << selectedAccount.getBalance() << endl;
+
+            selectedAccount.deposit(depositAmt);
+
+            cout << "  New Account Balance: " << selectedAccount.getBalance();
+            break;
+        case 4:
+            cout << "  Enter withdraw amount: ";
+            cin >> withdrawAmt;
+            cout << "  Old Account Balance: " << selectedAccount.getBalance() << endl;
+
+            selectedAccount.withdraw(withdrawAmt);
+
+            cout << "  New Account Balance: " << selectedAccount.getBalance();
+            break;
+        default:
+            cout << "  Invalid selection." << endl;
+        }
+        
+        cout << endl; // add a new line at the end of the selection 
+
+        menuOptions(); // call the menuOptions function to display the menu options again.
+    }
 
     cout << "\n\n  Press any key to continue ..."; 
 
@@ -38,6 +106,7 @@ int main()
     return 0; // system exit code
 }
 
+// Function to add 10 bank account class objects to the accounts array 
 void configureAccounts(bankAccount accounts[])
 {
     accounts[0] = bankAccount("Ludwig van Beethoven", "checking", 3500);
@@ -52,81 +121,52 @@ void configureAccounts(bankAccount accounts[])
     accounts[9] = bankAccount("Antonio Vivaldi", "checking", 4200);
 }
 
+// Function to find a selected account from the accounts array 
 bankAccount findAccount(bankAccount accounts[], int acctNum)
 {
+    bankAccount selAccount; 
+
+    // Loop over the accounts array 
     for (int i = 0; i < ARRAY_SIZE; i++)
     {
+        // if the account number matchesd the acctNum argument
+        // return the account class object.
         if (accounts[i].getAccountNumber() == acctNum)
         {
-            return accounts[i]; 
+            selAccount = accounts[i];
+            return selAccount;  
         }
     }
+
+    return selAccount; // return an empty class object if no account is selected
 }
 
-void menuOptions(bankAccount accounts[])
+// Function to display a list of account class objects
+void displayAccounts(bankAccount accounts[])
 {
-    int accountNum; 
-    int choice; 
-    double depositAmount; 
-    double withdrawnAmount; 
-    bankAccount account;
-    bankAccount selectedAccount;
+    bankAccount account; // account class object variable 
+    string accountList = ""; // string to hold account list
 
-    cout << "\n  Displaying Open Accounts" << endl; 
+    cout << "\n  Displaying Open Accounts" << endl; // display message 
 
+    // Iterate over the accounts array and output the results
     for (int i = 0; i < ARRAY_SIZE; i++)
     {
-        account = accounts[i];
-
-        cout << "\n  Account Number: " << account.getAccountNumber() << endl;
-        cout << "  Accound Holder Name: " << account.getAccountHolderName() << endl;
+        accountList.append(to_string(accounts[i].getAccountNumber()) + ", ");
     }
 
-    cout << "\n  Enter an account number: "; 
-    cin  >> accountNum; 
-    cout << endl; 
+    cout << "  " << accountList.substr(0, accountList.size() -2); // remove the last two characters from the string value
+}
 
-    selectedAccount = findAccount(accounts, accountNum); 
-
-    cout << "\n  MENU OPTIONS" << endl;
-    cout << "  1. Account Holder Name" << endl;
-    cout << "  2. Account Number" << endl;
-    cout << "  3. Account Balance" << endl;
-    cout << "  4. Deposit" << endl;
-    cout << "  5. Withdraw" << endl;
-    cin  >> choice; 
-    cout << endl; 
-
-    switch (choice)
-    {
-        case 1: 
-            cout << "  Account Holder Name: " << selectedAccount.getAccountHolderName(); 
-            break;
-        case 2: 
-            cout << "  Account Number: " << selectedAccount.getAccountNumber(); 
-            break;
-        case 3: 
-            cout << "  Account Balance: " << selectedAccount.getBalance(); 
-            break;
-        case 4:
-            cout << "  Enter deposit amount: ";
-            cin >> depositAmount; 
-            cout << "  Old Account Balance: " << selectedAccount.getBalance() << endl;
-
-            selectedAccount.deposit(depositAmount); 
-
-            cout << "  New Account Balance: " << selectedAccount.getBalance(); 
-            break;
-        case 5:
-            cout << "  Enter withdraw amount: ";
-            cin >> withdrawnAmount; 
-            cout << "  Old Account Balance: " << selectedAccount.getBalance() << endl;
-
-            selectedAccount.withdraw(withdrawnAmount); 
-
-            cout << "  New Account Balance: " << selectedAccount.getBalance(); 
-            break;
-        default:
-            cout << "  Invalid selection" << endl;
-    }
+// Function to display the menu options 
+void menuOptions()
+{
+    cout << "\n  Menu Options" << endl;
+    cout << "    1  Account Holder Name" << endl;
+    cout << "    2  Account Balance" << endl;
+    cout << "    3  Deposit" << endl;
+    cout << "    4  Withdraw" << endl;
+    cout << "   -1  Terminate the Program.         ->       ";
+    cin >> choice;
+    cout << endl;
 }
