@@ -16,24 +16,16 @@ using namespace std;
 class savingAccount : public bankAccount
 {
 public:
-	savingAccount() : bankAccount()
-	{
-		interestRate = 0; 
-	}
+	savingAccount(); 
 	// Deafult constructor 
-	// 
+	// The private data members are initailized
 
-	// Constructor
-	// The object is initialized acording ot the parameters
-	// account number and account balance for passed to the base 
-	// class bankAccount constructor. 
-	// Post: interestRate = iRate; 
-	savingAccount(double iRate, int aNum, double aBalance, string name) : bankAccount(aNum, aBalance, name) 
-	{
-		interestRate = iRate; 
-	}
+	void setInfo(int num, string name, string acctType, double bal, double intRate);
+	// function setInfo
+	// Sets the saving account information according to the 
+	// parameters
 
-	void setInterestRate(double iRate); 
+	void setInterestRate(double intRate); 
 	// function setInterestRate
 	// The private data member is set according to the 
 	// parameter

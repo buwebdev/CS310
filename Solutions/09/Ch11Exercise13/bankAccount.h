@@ -5,10 +5,7 @@
 */
 
 #ifndef H_bankAccount
-#define H_bankAccount 
-
-
-
+#define H_bankAccount
 
 #include <iostream>; 
 #include <string>; 
@@ -18,25 +15,16 @@ using namespace std;
 class bankAccount
 {
 public:
-	bankAccount()
-	{
-		accountNumber = 0; 
-		balance = 0.0; 
-		accountHolder = ""; 
-	}
-	// Default constructor 
+	bankAccount(); 
+	// Default Constructor 
+	// The private data members are initialized
 
-	bankAccount(int aNumber, double aBalance, string name)
-	{
-		accountNumber = aNumber;
-		balance = aBalance;
-		accountHolder = name; 
-	}
-	// Constructor
-	// The object is initialized acording ot the parameters
-	// Post: accountNumber = aNumber; balance = aBalance; 
+	void setBankInfo(int num, string name, string acctType, double bal); 
+	// function setBankInfo
+	// function to set the bank information.
+	// The bank information is setting according to the parameters
 
-	void setAccountNumber(int aNumber); 
+	void setAccountNumber(int num); 
 	// function setAccountNumber
 	// The account number is set according to the incoming 
 	// paraemter.
@@ -79,8 +67,9 @@ public:
 
 private:
 	int accountNumber; // variable to store the account number
-	double balance; // variable to store the balance 
 	string accountHolder; // variable to hold the account holders name
+	string accountType; // variable to hold the account type 
+	double balance; // variable to store the balance 
 };
 
 #endif // !H_bankAccount

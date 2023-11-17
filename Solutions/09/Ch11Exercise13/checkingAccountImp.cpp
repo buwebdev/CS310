@@ -6,13 +6,31 @@
 
 #include <iostream>; 
 #include "checkingAccount.h";
+#include "bankAccount.h";
 
 using namespace std;
 
-// Function to set the checking account interest rate 
-void checkingAccount::setInterestRate(double iRate)
+// Default constructor with initialized data members
+checkingAccount::checkingAccount()
 {
-	interestRate = iRate; 
+	interestRate = 0.0;
+	minBalance = 0.0;
+	serviceCharge = 0.0; 
+}
+
+// function sets the data for the class object 
+void checkingAccount::setInfo(int num, string name, string acctType, double bal, double intRate, double mBal, double servCharge)
+{
+	bankAccount::setBankInfo(num, name, acctType, bal); 
+	interestRate = intRate;
+	minBalance = mBal;
+	serviceCharge = servCharge;
+}
+
+// Function to set the checking account interest rate 
+void checkingAccount::setInterestRate(double intRate)
+{
+	interestRate = intRate; 
 }
 
 // Returns the interest rate
@@ -22,9 +40,9 @@ double checkingAccount::getInterestRate()
 }
 
 // Sets the minimum balance for the checking account
-void checkingAccount::setMinBalance(double mBalance)
+void checkingAccount::setMinBalance(double mBal)
 {
-	minBalance = mBalance;
+	minBalance = mBal;
 }
 
 // Returns the checking accounts minimum balance
@@ -122,7 +140,7 @@ void checkingAccount::print()
 {
 	bankAccount::print(); // call the print function from the base class
 
-	cout << "  Interest Rate: " << interestRate << "%" << endl;
-	cout << "  Minimum Balance: " << minBalance << endl; 
-	cout << "  Service Charge: " << serviceCharge << endl;
+	cout << "\n    Interest Rate: " << interestRate << "%"
+		 << "\n    Minimum Balance: " << minBalance
+		 << "\n    Service Charge: " << serviceCharge << endl;
 }

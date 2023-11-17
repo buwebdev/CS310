@@ -16,22 +16,14 @@ using namespace std;
 class checkingAccount: public bankAccount
 {
 public:
-	checkingAccount(): bankAccount()
-	{
-		interestRate = 0.0; 
-		minBalance = 0.0; 
-		serviceCharge = 0.0; 
-	}
+	checkingAccount();
 	// Default constructor 
 
-	checkingAccount(double iRate, double mBalance, double servCharge, int aNum, double aBalance, string name) : bankAccount(aNum, aBalance, name)
-	{
-		interestRate = iRate; 
-		minBalance = mBalance; 
-		serviceCharge = servCharge; 
-	}
+	void setInfo(int num, string name, string acctType, double bal, double intRate, double mBal, double servCharge); 
+	// function setInfo
+	// Sets the checking account information according to the parameters
 
-	void setInterestRate(double iRate); 
+	void setInterestRate(double intRate); 
 	// function setInterestRate
 	// The private data member is set according to the 
 	// paraemter 
@@ -41,7 +33,7 @@ public:
 	// function getInterestRate
 	// Returns the interest rate for a checking account
 
-	void setMinBalance(double mBalance); 
+	void setMinBalance(double mBal); 
 	// function setMinBalance
 	// The private data membrer is set according to the 
 	// parameter 
