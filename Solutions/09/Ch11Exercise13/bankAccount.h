@@ -4,6 +4,12 @@
 	File Name: bankAccount.h
 */
 
+#ifndef H_bankAccount
+#define H_bankAccount 
+
+
+
+
 #include <iostream>; 
 #include <string>; 
 
@@ -12,10 +18,20 @@ using namespace std;
 class bankAccount
 {
 public:
-	bankAccount();
+	bankAccount()
+	{
+		accountNumber = 0; 
+		balance = 0.0; 
+		accountHolder = ""; 
+	}
 	// Default constructor 
 
-	bankAccount(int aNumber, double aBalance); 
+	bankAccount(int aNumber, double aBalance, string name)
+	{
+		accountNumber = aNumber;
+		balance = aBalance;
+		accountHolder = name; 
+	}
 	// Constructor
 	// The object is initialized acording ot the parameters
 	// Post: accountNumber = aNumber; balance = aBalance; 
@@ -38,6 +54,14 @@ public:
 	// The value of the private data member balance 
 	// is returned. 
 
+	void setAccountHolder(string name); 
+	// function accoundHolder 
+	// The private member is set according to the incoming parameter
+	// Post: accountHolder = name; 
+
+	string getAccountHolder();
+	// function getAccountHolder
+	// Returns the account holder name
 	
 	void deposit(double dAmt); 
 	// function deposit
@@ -56,5 +80,7 @@ public:
 private:
 	int accountNumber; // variable to store the account number
 	double balance; // variable to store the balance 
+	string accountHolder; // variable to hold the account holders name
 };
 
+#endif // !H_bankAccount
